@@ -10,10 +10,7 @@ export function TrustStats() {
     value: '500+',
     label: 'Partner Fitters'
   },
-  {
-    value: '10,000+',
-    label: 'Happy Customers'
-  },
+
   {
     value: '4.9★',
     label: 'Average Rating'
@@ -27,7 +24,7 @@ export function TrustStats() {
   return (
     <section className="py-20 bg-white border-b border-hairline">
       <div className="max-w-site mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+        <div className="flex flex-wrap justify-center gap-x-16 gap-y-8">
           {stats.map((stat, idx) =>
           <motion.div
             key={idx}
@@ -46,8 +43,8 @@ export function TrustStats() {
               duration: 0.5,
               delay: idx * 0.1
             }}
-            className="text-center">
-            
+            className="text-center w-28 sm:w-32">
+
               <div className="text-3xl lg:text-4xl font-extrabold text-ink mb-2">
                 {stat.value}
               </div>
