@@ -22,10 +22,7 @@ export function TrustStats() {
     value: '99%',
     label: 'On-Time Appointments'
   },
-  {
-    value: '24/7',
-    label: 'Customer Support'
-  }];
+  ];
 
   return (
     <section className="py-20 bg-white border-b border-hairline">
