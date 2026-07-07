@@ -315,13 +315,13 @@ export function TyreSearch() {
               duration: 0.7,
               ease: 'easeOut'
             }}
-            className="relative hidden lg:flex justify-center">
+            className="relative flex justify-center mt-4 lg:mt-0">
 
-            <div className="absolute w-[420px] h-[420px] bg-brand/20 rounded-full blur-[110px]" />
+            <div className="absolute w-[280px] h-[280px] lg:w-[420px] lg:h-[420px] bg-brand/20 rounded-full blur-[110px]" />
             <img
               src="/tyre.png"
               alt="Premium tyre"
-              className="relative z-10 w-full max-w-md drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]" />
+              className="relative z-10 w-full max-w-[240px] lg:max-w-md drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]" />
 
 
             <motion.div
@@ -333,7 +333,7 @@ export function TyreSearch() {
                 repeat: Infinity,
                 ease: 'easeInOut'
               }}
-              className="absolute top-8 left-0 bg-white p-4 rounded-2xl shadow-float flex items-center gap-3 z-20">
+              className="hidden lg:flex absolute top-8 left-0 bg-white p-4 rounded-2xl shadow-float items-center gap-3 z-20">
 
               <div className="w-10 h-10 bg-ink rounded-xl flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5 text-brand" />
@@ -354,7 +354,7 @@ export function TyreSearch() {
                 ease: 'easeInOut',
                 delay: 0.8
               }}
-              className="absolute bottom-16 right-0 bg-white p-4 rounded-2xl shadow-float flex items-center gap-3 z-20">
+              className="hidden lg:flex absolute bottom-16 right-0 bg-white p-4 rounded-2xl shadow-float items-center gap-3 z-20">
 
               <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center">
                 <Gauge className="w-5 h-5 text-accent" />
@@ -375,7 +375,7 @@ export function TyreSearch() {
                 ease: 'easeInOut',
                 delay: 1.4
               }}
-              className="absolute bottom-0 left-4 bg-white p-4 rounded-2xl shadow-float flex items-center gap-3 z-20">
+              className="hidden lg:flex absolute bottom-0 left-4 bg-white p-4 rounded-2xl shadow-float items-center gap-3 z-20">
 
               <div className="w-10 h-10 bg-success/10 rounded-xl flex items-center justify-center">
                 <Award className="w-5 h-5 text-success" />
@@ -407,52 +407,48 @@ export function TyreSearch() {
           }}
           className="mt-20 rounded-[32px] border border-white/10 bg-white/[0.03] backdrop-blur-2xl p-6 md:p-10">
 
-          <div className="flex flex-col lg:flex-row gap-10 items-center">
-            
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-extrabold text-white mb-2 tracking-tight">
+              How to Read Your Tyre Size
+            </h3>
+            <p className="text-slate-400">
+              Find these three numbers on the sidewall of your tyre.
+            </p>
+          </div>
 
-            <div className="flex-1 w-full">
-              <h3 className="text-2xl font-extrabold text-white mb-2 tracking-tight">
-                How to Read Your Tyre Size
-              </h3>
-              <p className="text-slate-400 mb-8">
-                Find these three numbers on the sidewall of your tyre.
-              </p>
+          <div className="grid sm:grid-cols-3 gap-5">
+            {[
+            {
+              badge: 'W',
+              title: 'Width',
+              desc: 'Tyre width in millimeters (e.g., 205)'
+            },
+            {
+              badge: 'P',
+              title: 'Profile',
+              desc: 'Aspect ratio as percentage (e.g., 55)'
+            },
+            {
+              badge: 'R',
+              title: 'Diameter',
+              desc: 'Rim diameter in inches (e.g., 17)'
+            }].
+            map((item) =>
+            <div
+              key={item.badge}
+              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-center sm:text-left">
 
-              <div className="grid sm:grid-cols-3 gap-5">
-                {[
-                {
-                  badge: 'W',
-                  title: 'Width',
-                  desc: 'Tyre width in millimeters (e.g., 205)'
-                },
-                {
-                  badge: 'P',
-                  title: 'Profile',
-                  desc: 'Aspect ratio as percentage (e.g., 55)'
-                },
-                {
-                  badge: 'R',
-                  title: 'Diameter',
-                  desc: 'Rim diameter in inches (e.g., 17)'
-                }].
-                map((item) =>
-                <div
-                  key={item.badge}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-
-                    <div className="w-9 h-9 rounded-xl bg-brand flex items-center justify-center font-black text-ink text-sm mb-4">
-                      {item.badge}
-                    </div>
-                    <p className="font-bold text-white text-base mb-1">
-                      {item.title}
-                    </p>
-                    <p className="text-slate-400 text-sm leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                )}
+                <div className="w-9 h-9 rounded-xl bg-brand flex items-center justify-center font-black text-ink text-sm mb-4 mx-auto sm:mx-0">
+                  {item.badge}
+                </div>
+                <p className="font-bold text-white text-base mb-1">
+                  {item.title}
+                </p>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
-            </div>
+            )}
           </div>
         </motion.div>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 export function Services() {
   const services = [
   {
@@ -121,10 +121,6 @@ export function Services() {
                     </li>
                 )}
                 </ul>
-                <button className="flex items-center gap-2 text-ink font-bold hover:text-brand-hover transition-colors group/btn">
-                  Learn more{' '}
-                  <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                </button>
               </div>
             </motion.div>
           )}
