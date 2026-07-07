@@ -57,50 +57,14 @@ export function WhyChooseUs() {
             className="relative h-[600px] rounded-[40px] overflow-hidden shadow-2xl hidden lg:block">
 
             <img
-              src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=1600"
+              src="/whychoose.jpeg"
               alt="Premium automotive service"
               className="w-full h-full object-cover" />
 
             <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
             <div className="absolute inset-0 bg-brand/5" />
 
-            {/* Floating rating card */}
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 20
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0
-              }}
-              viewport={{
-                once: true
-              }}
-              transition={{
-                duration: 0.5,
-                delay: 0.3
-              }}
-              className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-md rounded-3xl p-6 shadow-float flex items-center gap-5">
-
-              <div className="flex -space-x-3 flex-shrink-0">
-                {['bg-ink', 'bg-brand', 'bg-accent'].map((c, i) =>
-                <div key={i} className={`w-11 h-11 rounded-full ${c} border-2 border-white`} />
-                )}
-              </div>
-              <div className="w-px h-10 bg-hairline flex-shrink-0" />
-              <div>
-                <div className="flex items-center gap-1 mb-1">
-                  {[...Array(5)].map((_, i) =>
-                  <Star key={i} className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
-                  )}
-                  <span className="ml-1 font-extrabold text-ink text-sm">4.9</span>
-                </div>
-                <p className="text-xs text-subtle font-medium">
-                  Trusted by 10,000+ drivers nationwide
-                </p>
-              </div>
-            </motion.div>
+            
           </motion.div>
 
           {/* Right: Features */}
