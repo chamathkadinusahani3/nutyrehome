@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { Plus } from 'lucide-react';
 export function FAQ() {
   const faqs = [
   {
-    q: 'How does mobile fitting work?',
-    a: 'Simply select "Mobile Fitting" at checkout, choose a date and time, and our professional fitter will arrive at your home or workplace in a fully equipped van to fit your tyres on-site.'
+    q: 'How does your mobile tyre fitting service work?',
+    a: 'Our service lets you order tyres online and have them fitted at your home, workplace, or even roadside. Just select your tyres, choose a convenient time during checkout, and our technician will come directly to your location.'
   },
   {
-    q: "What's included in the price?",
-    a: 'Our prices are fully inclusive. The price you see includes the tyre, fitting, new standard valve, wheel balancing, and environmentally friendly disposal of your old tyre.'
+    q: 'Do you also offer garage fitting?',
+    a: 'Yes! Alongside our mobile service, you can also have your tyres fitted at one of our trusted partner garages. Just choose whichever option is more convenient for you at checkout.'
   },
   {
-    q: 'How long does fitting take?',
-    a: 'On average, it takes about 20-30 minutes per tyre. A full set of four tyres usually takes around 1 to 1.5 hours.'
+    q: 'Are the prices shown inclusive of fitting and other costs?',
+    a: 'Yes, all tyre prices you see include fitting, balancing, and disposal of old tyres. There are no hidden charges — what you see is exactly what you’ll pay.'
   },
   {
-    q: 'Can I choose my fitting location?',
-    a: 'Yes! You can choose to have them fitted at home, at work, or at one of our hundreds of trusted partner garages across the UK.'
+    q: 'How long does a fitting appointment usually take?',
+    a: 'On average, a tyre fitting takes between 30 to 60 minutes depending on the number of tyres and the vehicle type. Our technicians work efficiently to ensure minimal disruption to your day.'
+  },
+  {
+    q: "I'm not sure which tyres to choose — can you help?",
+    a: 'Absolutely! You can search by vehicle registration, tyre size, or make and model on our website. And if you still need assistance, our friendly team is always happy to help you find the right fit.'
   },
   {
     q: 'Can I change my appointment?',
@@ -26,31 +30,71 @@ export function FAQ() {
 
   const [openIdx, setOpenIdx] = useState<number | null>(0);
   return (
-    <section className="py-24 bg-soft" id="faq">
-      <div className="max-w-3xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold text-ink mb-4 tracking-tight">
+    <section className="py-24 bg-soft relative overflow-hidden" id="faq">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/10 rounded-full blur-[150px] pointer-events-none" />
+
+      <div className="max-w-3xl mx-auto px-6 relative">
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0
+          }}
+          viewport={{
+            once: true
+          }}
+          transition={{
+            duration: 0.6
+          }}
+          className="text-center mb-16">
+
+          <span className="inline-block text-sm font-bold tracking-widest text-ink uppercase mb-3 bg-brand/15 px-4 py-1.5 rounded-full">
+            Got Questions?
+          </span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-ink mb-4 tracking-tight">
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-subtle">
             Everything you need to know about buying and fitting tyres with us.
           </p>
-        </div>
+        </motion.div>
 
         <div className="space-y-4">
           {faqs.map((faq, idx) =>
-          <div
+          <motion.div
             key={idx}
-            className="bg-white rounded-2xl border border-hairline overflow-hidden shadow-sm">
-            
+            initial={{
+              opacity: 0,
+              y: 24
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0
+            }}
+            viewport={{
+              once: true,
+              amount: 0.5
+            }}
+            transition={{
+              duration: 0.5,
+              delay: idx * 0.08,
+              ease: 'easeOut'
+            }}
+            className={`bg-white rounded-3xl border overflow-hidden shadow-sm transition-colors duration-300 ${openIdx === idx ? 'border-brand/50 shadow-card' : 'border-hairline'}`}>
+
               <button
               onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-              className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
-              
-                <span className="font-bold text-ink text-lg">{faq.q}</span>
-                <ChevronDown
-                className={`w-5 h-5 text-subtle transition-transform duration-300 ${openIdx === idx ? 'rotate-180' : ''}`} />
-              
+              className="w-full px-6 md:px-8 py-6 flex items-center justify-between gap-4 text-left focus:outline-none group">
+
+                <span className={`font-bold text-lg transition-colors ${openIdx === idx ? 'text-ink' : 'text-ink/90 group-hover:text-ink'}`}>
+                  {faq.q}
+                </span>
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${openIdx === idx ? 'bg-brand rotate-45' : 'bg-soft group-hover:bg-brand/20'}`}>
+                  <Plus className="w-4 h-4 text-ink" />
+                </div>
               </button>
               <AnimatePresence>
                 {openIdx === idx &&
@@ -71,14 +115,14 @@ export function FAQ() {
                   duration: 0.3,
                   ease: 'easeInOut'
                 }}>
-                
-                    <div className="px-6 pb-5 text-subtle leading-relaxed">
+
+                    <div className="px-6 md:px-8 pb-6 text-subtle leading-relaxed border-t border-hairline pt-5">
                       {faq.a}
                     </div>
                   </motion.div>
               }
               </AnimatePresence>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

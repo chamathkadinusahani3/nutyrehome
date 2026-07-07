@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ChevronDown, ShieldCheck, Gauge, Award, PhoneCall, X } from 'lucide-react';
+import { Search, ChevronDown, ShieldCheck, Gauge, Award, PhoneCall, X, MapPin } from 'lucide-react';
 
 const STD_WIDTHS = ['145', '155', '165', '175', '185', '195', '205', '215', '225', '235', '245', '255', '265'];
 const STD_PROFILES = ['30', '35', '40', '45', '50', '55', '60', '65', '70', '75'];
@@ -53,22 +53,39 @@ function SizeSelect({
 }
 
 export function TyreSearch() {
+  const [mode, setMode] = useState<'size' | 'reg'>('size');
   const [width, setWidth] = useState('');
   const [profile, setProfile] = useState('');
   const [diameter, setDiameter] = useState('');
+  const [regNumber, setRegNumber] = useState('');
+  const [postcode, setPostcode] = useState('');
   const [confirmed, setConfirmed] = useState('');
 
   const builtSize = width && profile && diameter ? `${width}/${profile}R${diameter}` : '';
+  const canSearch = mode === 'size' ?
+  !!builtSize :
+  regNumber.trim().length > 0 && postcode.trim().length > 0;
 
   const handleSearch = () => {
-    if (!builtSize) return;
-    setConfirmed(builtSize);
+    if (!canSearch) return;
+    setConfirmed(
+      mode === 'size' ?
+      builtSize :
+      `${regNumber.trim().toUpperCase()} · ${postcode.trim().toUpperCase()}`
+    );
+  };
+
+  const handleModeChange = (next: 'size' | 'reg') => {
+    setMode(next);
+    setConfirmed('');
   };
 
   const handleReset = () => {
     setWidth('');
     setProfile('');
     setDiameter('');
+    setRegNumber('');
+    setPostcode('');
     setConfirmed('');
   };
 
@@ -118,6 +135,68 @@ export function TyreSearch() {
             </p>
 
             <div className="relative rounded-[32px] border border-white/10 bg-white/[0.03] backdrop-blur-2xl p-6 md:p-8">
+              {/* Mode Tabs */}
+              <div className="flex gap-2 mb-6 bg-white/[0.04] p-1.5 rounded-2xl border border-white/5">
+                <button
+                  onClick={() => handleModeChange('reg')}
+                  className={`flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all ${mode === 'reg' ? 'bg-brand text-ink shadow-sm' : 'text-slate-300 hover:text-white'}`}>
+
+                  Vehicle Registration
+                </button>
+                <button
+                  onClick={() => handleModeChange('size')}
+                  className={`flex-1 py-3 px-4 rounded-xl font-bold text-sm transition-all ${mode === 'size' ? 'bg-brand text-ink shadow-sm' : 'text-slate-300 hover:text-white'}`}>
+
+                  Tyre Size
+                </button>
+              </div>
+
+              {mode === 'reg' ?
+              <div className="mb-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full bg-brand flex items-center justify-center text-ink text-[10px] font-black flex-shrink-0">
+                      GB
+                    </div>
+                    <label className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400">
+                      Registration Number
+                    </label>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute left-0 top-0 bottom-0 w-14 bg-brand rounded-l-2xl flex items-center justify-center">
+                      <span className="text-ink font-black text-xs">GB</span>
+                    </div>
+                    <input
+                    type="text"
+                    value={regNumber}
+                    onChange={(e) => {
+                      setRegNumber(e.target.value);
+                      setConfirmed('');
+                    }}
+                    placeholder="ENTER REG"
+                    className="w-full h-16 pl-16 pr-6 bg-white/[0.04] border border-white/10 text-brand font-mono font-extrabold text-2xl rounded-2xl uppercase tracking-widest placeholder:text-slate-500 placeholder:font-sans placeholder:tracking-normal placeholder:font-normal focus:outline-none focus:border-brand/50 transition-all" />
+
+                  </div>
+
+                  <div className="mt-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <MapPin className="w-4 h-4 text-brand flex-shrink-0" />
+                      <label className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400">
+                        Fitting Postcode
+                      </label>
+                    </div>
+                    <input
+                    type="text"
+                    value={postcode}
+                    onChange={(e) => {
+                      setPostcode(e.target.value);
+                      setConfirmed('');
+                    }}
+                    placeholder="e.g. SW1A 1AA"
+                    className="w-full h-14 px-5 bg-white/[0.04] border border-white/10 text-white font-semibold rounded-2xl uppercase tracking-wider placeholder:text-slate-500 placeholder:font-normal placeholder:normal-case placeholder:tracking-normal focus:outline-none focus:border-brand/50 transition-all" />
+
+                  </div>
+                </div> :
+
               <div className="grid grid-cols-3 gap-3 md:gap-4 mb-6">
                 <SizeSelect
                   label="Width"
@@ -140,7 +219,7 @@ export function TyreSearch() {
                   }} />
 
                 <SizeSelect
-                  label="Rim"
+                  label="Diameter"
                   badge="R"
                   value={diameter}
                   options={STD_DIAMETERS}
@@ -150,17 +229,18 @@ export function TyreSearch() {
                   }} />
 
               </div>
+              }
 
               <div className="flex gap-3">
                 <button
                   onClick={handleSearch}
-                  disabled={!builtSize}
+                  disabled={!canSearch}
                   className="flex-1 h-14 rounded-2xl bg-brand text-ink font-bold text-sm hover:bg-brand-hover transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_20px_50px_rgba(255,212,0,0.15)] disabled:opacity-40 disabled:cursor-not-allowed">
 
                   <Search className="w-4 h-4" />
                   Search Tyres
                 </button>
-                {(width || profile || diameter) &&
+                {(width || profile || diameter || regNumber || postcode) &&
                 <button
                   onClick={handleReset}
                   className="h-14 px-5 rounded-2xl border border-white/10 bg-white/[0.03] text-slate-300 hover:text-white hover:border-white/20 transition-all duration-300 flex items-center gap-2 flex-shrink-0 text-sm font-bold">
@@ -307,6 +387,74 @@ export function TyreSearch() {
             </motion.div>
           </motion.div>
         </div>
+
+        {/* Tyre Size Reference Guide */}
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0
+          }}
+          viewport={{
+            once: true
+          }}
+          transition={{
+            duration: 0.6,
+            ease: 'easeOut'
+          }}
+          className="mt-20 rounded-[32px] border border-white/10 bg-white/[0.03] backdrop-blur-2xl p-6 md:p-10">
+
+          <div className="flex flex-col lg:flex-row gap-10 items-center">
+            
+
+            <div className="flex-1 w-full">
+              <h3 className="text-2xl font-extrabold text-white mb-2 tracking-tight">
+                How to Read Your Tyre Size
+              </h3>
+              <p className="text-slate-400 mb-8">
+                Find these three numbers on the sidewall of your tyre.
+              </p>
+
+              <div className="grid sm:grid-cols-3 gap-5">
+                {[
+                {
+                  badge: 'W',
+                  title: 'Width',
+                  desc: 'Tyre width in millimeters (e.g., 205)'
+                },
+                {
+                  badge: 'P',
+                  title: 'Profile',
+                  desc: 'Aspect ratio as percentage (e.g., 55)'
+                },
+                {
+                  badge: 'R',
+                  title: 'Diameter',
+                  desc: 'Rim diameter in inches (e.g., 17)'
+                }].
+                map((item) =>
+                <div
+                  key={item.badge}
+                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+
+                    <div className="w-9 h-9 rounded-xl bg-brand flex items-center justify-center font-black text-ink text-sm mb-4">
+                      {item.badge}
+                    </div>
+                    <p className="font-bold text-white text-base mb-1">
+                      {item.title}
+                    </p>
+                    <p className="text-slate-400 text-sm leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>);
 

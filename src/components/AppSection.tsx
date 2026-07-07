@@ -45,39 +45,147 @@ export function AppSection() {
           </motion.div>
 
           {/* Right: Content */}
-          <div className="text-white">
-            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-8 backdrop-blur-sm">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 40
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0
+            }}
+            viewport={{
+              once: true
+            }}
+            transition={{
+              duration: 0.7,
+              ease: 'easeOut'
+            }}
+            className="text-white">
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.8
+              }}
+              whileInView={{
+                opacity: 1,
+                scale: 1
+              }}
+              viewport={{
+                once: true
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 0.1
+              }}
+              className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-8 backdrop-blur-sm">
+
               <Smartphone className="w-8 h-8 text-white" />
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight">
+            </motion.div>
+            <motion.h2
+              initial={{
+                opacity: 0,
+                y: 20
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0
+              }}
+              viewport={{
+                once: true
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.15
+              }}
+              className="text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight">
+
               The Ultimate Tyre Companion
-            </h2>
-            <p className="text-lg text-slate-300 mb-10 leading-relaxed max-w-lg">
+            </motion.h2>
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 20
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0
+              }}
+              viewport={{
+                once: true
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.2
+              }}
+              className="text-lg text-slate-300 mb-10 leading-relaxed max-w-lg">
+
               Download the NUTYRE app to manage your vehicles, book fittings on
               the go, and get exclusive access to special promotions.
-            </p>
+            </motion.p>
 
             <ul className="space-y-4 mb-12">
               {features.map((feature, idx) =>
-              <li
+              <motion.li
                 key={idx}
+                initial={{
+                  opacity: 0,
+                  x: -20
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0
+                }}
+                viewport={{
+                  once: true
+                }}
+                transition={{
+                  duration: 0.4,
+                  delay: 0.25 + idx * 0.08
+                }}
                 className="flex items-center gap-3 text-slate-200 font-medium">
-                
+
                   <CheckCircle2 className="w-6 h-6 text-brand" />
                   {feature}
-                </li>
+                </motion.li>
               )}
             </ul>
 
-            <div className="flex flex-wrap gap-4">
-              <button className="bg-white text-ink px-8 py-4 rounded-xl font-bold hover:bg-slate-100 transition-colors flex items-center gap-2">
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 20
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0
+              }}
+              viewport={{
+                once: true
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 0.6
+              }}
+              className="flex flex-wrap gap-4">
+
+              <a
+                href="https://apps.apple.com/lk/app/nutyreuk/id6758754476"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-ink px-8 py-4 rounded-xl font-bold hover:bg-slate-100 transition-colors flex items-center gap-2">
                 Download on App Store
-              </button>
-              <button className="bg-white/10 text-white px-8 py-4 rounded-xl font-bold hover:bg-white/20 transition-colors backdrop-blur-sm">
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.nutyre.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 text-white px-8 py-4 rounded-xl font-bold hover:bg-white/20 transition-colors backdrop-blur-sm">
                 Get it on Google Play
-              </button>
-            </div>
-          </div>
+              </a>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>);

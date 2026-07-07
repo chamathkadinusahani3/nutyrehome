@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Layers, Zap, Users, Truck, Lock } from 'lucide-react';
+import { ShieldCheck, Layers, Zap, Users, Truck, Lock, Star } from 'lucide-react';
 export function WhyChooseUs() {
   const features = [
   {
@@ -55,21 +55,67 @@ export function WhyChooseUs() {
               duration: 0.6
             }}
             className="relative h-[600px] rounded-[40px] overflow-hidden shadow-2xl hidden lg:block">
-            
+
             <img
               src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=1600"
               alt="Premium automotive service"
               className="w-full h-full object-cover" />
-            
-            <div className="absolute inset-0 bg-brand/10" />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+            <div className="absolute inset-0 bg-brand/5" />
+
+            {/* Floating rating card */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 20
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0
+              }}
+              viewport={{
+                once: true
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 0.3
+              }}
+              className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-md rounded-3xl p-6 shadow-float flex items-center gap-5">
+
+              <div className="flex -space-x-3 flex-shrink-0">
+                {['bg-ink', 'bg-brand', 'bg-accent'].map((c, i) =>
+                <div key={i} className={`w-11 h-11 rounded-full ${c} border-2 border-white`} />
+                )}
+              </div>
+              <div className="w-px h-10 bg-hairline flex-shrink-0" />
+              <div>
+                <div className="flex items-center gap-1 mb-1">
+                  {[...Array(5)].map((_, i) =>
+                  <Star key={i} className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
+                  )}
+                  <span className="ml-1 font-extrabold text-ink text-sm">4.9</span>
+                </div>
+                <p className="text-xs text-subtle font-medium">
+                  Trusted by 10,000+ drivers nationwide
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Right: Features */}
           <div>
-            <h2 className="text-4xl font-extrabold text-ink mb-12 tracking-tight">
+            <span className="inline-block text-sm font-bold tracking-widest text-ink uppercase mb-3 bg-brand/15 px-4 py-1.5 rounded-full">
+              Why NUTYRE
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-ink mb-4 tracking-tight">
               Why Choose NUTYRE
             </h2>
-            <div className="grid sm:grid-cols-2 gap-8">
+            <p className="text-lg text-subtle mb-12 max-w-lg">
+              Everything you need for a fast, fair, and hassle-free tyre
+              experience — from search to fitting.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-5">
               {features.map((feature, idx) =>
               <motion.div
                 key={idx}
@@ -86,12 +132,15 @@ export function WhyChooseUs() {
                 }}
                 transition={{
                   duration: 0.5,
-                  delay: idx * 0.1
+                  delay: idx * 0.08
                 }}
-                className="bg-white p-6 rounded-3xl shadow-sm border border-hairline hover:shadow-md transition-shadow">
-                
-                  <div className="w-12 h-12 bg-ink rounded-xl flex items-center justify-center mb-4">
-                    <feature.icon className="w-6 h-6 text-brand" />
+                whileHover={{
+                  y: -4
+                }}
+                className="group bg-white p-6 rounded-3xl border border-hairline shadow-sm hover:shadow-card hover:border-brand/30 transition-all">
+
+                  <div className="w-12 h-12 bg-ink rounded-2xl flex items-center justify-center mb-4 group-hover:bg-brand transition-colors duration-300">
+                    <feature.icon className="w-6 h-6 text-brand group-hover:text-ink transition-colors duration-300" />
                   </div>
                   <h3 className="text-lg font-bold text-ink mb-2">
                     {feature.title}
